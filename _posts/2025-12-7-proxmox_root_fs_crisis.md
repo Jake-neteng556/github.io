@@ -31,8 +31,9 @@ A failed VM export operation redirected a large raw storage stream into a file i
 ## Outcome
 - System returned to safe operating space (**5% usage**)
 - No filesystem corruption observed
-- Follow-up actions planned to improve environment resilience
+- Follow-up actions planned to improve environmental resilience
 
 ## Follow-Up Work
-- Improve Proxmox storage layout for large exports
-- Fix nested hypervisor reachability constraints
+- Improve the overall Proxmox storage layout for large exports
+
+
