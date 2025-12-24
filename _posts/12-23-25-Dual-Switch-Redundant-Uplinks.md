@@ -1,4 +1,4 @@
-# 2025-12-23 – Design Change: Dual Data Switch Redundant Uplinks (No Port-Channel Yet)
+# 2025-12-23 – Design Change: Dual Data Switch Redundant Uplinks (No Port-Channel quite yet)
 
 ## Summary
 - Implemented redundant uplink design using two data switches:
@@ -43,3 +43,4 @@
 - Relies on correct L2/L3 configuration and STP
 - The Intel NUC ESXi server farm is directly connected to the CBS350-24P switch. Consequently, if the switch suffers a hardware failure, there is no redundancy, as the system relies on a single physical point of failure.
 - To address this single point of failure, I would ideally implement multi-homing via redundant NICs across both switches. Unfortunately, this is not a viable option given the current configuration of my lab containers.   
+
