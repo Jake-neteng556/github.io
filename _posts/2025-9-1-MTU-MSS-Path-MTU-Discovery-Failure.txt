@@ -29,7 +29,7 @@
 # MTU / MSS Path MTU Discovery Failure  
 **T-Mobile 5G • Azure CDN • Windows Update • Synology Backup**  
 
-> Old problem. Still relevant. Still painful.
+> Old problem. Still relevant. Still painful for any network!
 
 ---
 
@@ -45,7 +45,7 @@ Mitigation required **explicit WAN MTU reduction and MSS clamping**.
 
 - Windows Update / DISM hangs or stalls mid-download
 - `portal.azure.com` intermittently times out
-- Synology Active Backup for Business fails with “network / internet error”
+- Synology Active Backup for Business fails with “network/internet error.”
 - Web applications partially load or freeze
 - Speed tests appear normal (200+ Mbps down, ~40 Mbps up)
 
@@ -69,7 +69,7 @@ Mitigation required **explicit WAN MTU reduction and MSS clamping**.
 
 ### LAN Validation (Cisco Switch → NAS)
 ```text
-ping 192.168.50.103 size 8000
+ping 192.168.XXX.XXX size 8000
 !!!!!
 Success rate is 100 percent
 ✔ Confirms LAN, switching, and NAS are not at fault.
@@ -87,7 +87,7 @@ ping -f -l 1300 portal.azure.com
 # Fragmentation required
 
 ping -f -l 1280 portal.azure.com
-# Partial / inconsistent success
+# Partial/inconsistent success
 
 ping -f -l 1212 portal.azure.com
 # 100% success
@@ -100,7 +100,7 @@ PMTUD ICMP responses unreliable
 Azure CDN + T-Mobile CGNAT exposes the issue clearly
 
 Root Cause (Most Likely)
-T-Mobile 5G uses carrier encapsulation (GTP / CGNAT / tunnels) reducing usable MTU
+T-Mobile 5G uses carrier encapsulation (GTP / CGNAT / tunnels), reducing usable MTU
 
 ICMP “fragmentation needed” messages are not reliably returned
 
@@ -122,7 +122,7 @@ ip link show eth4
 # mtu 1240 confirmed
 Result:
 
-MSS automatically clamped by router
+MSS is automatically clamped by the router
 
 No LAN traffic impacted
 
@@ -137,7 +137,8 @@ Synology backups complete without interruption
 
 No DF-related ICMP failures under MTU ceiling
 
-Lessons Learned
+Lessons Learned here:
+
 Bandwidth ≠ stability
 
 PMTUD failure still exists in 2025
@@ -146,6 +147,7 @@ Carrier + Cloud is the worst failure domain
 
 MSS clamping remains a valid, professional mitigation
 
-You don’t need provider admission when packet behavior proves the case
+**You don’t need provider admission when packet behavior proves the case**
+
 
 
