@@ -1,0 +1,151 @@
+──────────────┐
+│ PC / Laptop │
+│ (Windows) │
+└──────┬───────┘
+│ LAN (MTU 1500 – stable)
+│
+┌──────▼───────┐
+│ ASUS RT-AX82U│
+│ Main Router │
+│ (Merlin) │
+│ WAN MTU 1240 │ ◄── MTU enforced here
+└──────┬───────┘
+│ WAN (CGNAT / tunnels)
+│
+┌──────▼───────┐
+│ T-Mobile 5G │
+│ Gateway / │
+│ Carrier Core │
+└──────┬───────┘
+│
+┌──────▼───────┐
+│ Microsoft │
+│ Azure / CDN │
+│ (portal, WU) │
+└──────────────┘
+
+
+
+# MTU / MSS Path MTU Discovery Failure  
+**T-Mobile 5G • Azure CDN • Windows Update • Synology Backup**  
+
+> Old problem. Still relevant. Still painful.
+
+---
+
+## Summary
+
+Intermittent, non-deterministic network failures were observed despite normal bandwidth and latency.
+Root cause was **path MTU discovery failure** on a carrier-grade NAT / tunneled WAN path.
+Mitigation required **explicit WAN MTU reduction and MSS clamping**.
+
+---
+
+## Affected Symptoms
+
+- Windows Update / DISM hangs or stalls mid-download
+- `portal.azure.com` intermittently times out
+- Synology Active Backup for Business fails with “network / internet error”
+- Web applications partially load or freeze
+- Speed tests appear normal (200+ Mbps down, ~40 Mbps up)
+
+**Key red flag:** Throughput tests succeed, long-lived TCP sessions fail.
+
+---
+
+## Network Environment (Simplified)
+
+- ISP: T-Mobile 5G (CGNAT + tunnel encapsulation)
+- Router: ASUS RT-AX82U (AsusWRT-Merlin / gnuton)
+- AiMesh Node: RT-AX55 (stock firmware)
+- Core Switch: Cisco Catalyst C1000
+- NAS: Synology (Btrfs, Active Backup for Business)
+- LAN MTU: 1500 (clean)
+- WAN MTU (final): **1240**
+
+---
+
+## Evidence & Testing
+
+### LAN Validation (Cisco Switch → NAS)
+```text
+ping 192.168.50.103 size 8000
+!!!!!
+Success rate is 100 percent
+✔ Confirms LAN, switching, and NAS are not at fault.
+
+WAN Path MTU Testing (Windows, DF set)
+powershell
+Copy code
+ping -f -l 1340 portal.azure.com
+# Fragmentation required
+
+ping -f -l 1320 portal.azure.com
+# Fragmentation required
+
+ping -f -l 1300 portal.azure.com
+# Fragmentation required
+
+ping -f -l 1280 portal.azure.com
+# Partial / inconsistent success
+
+ping -f -l 1212 portal.azure.com
+# 100% success
+Conclusion:
+
+Effective path MTU < 1300
+
+PMTUD ICMP responses unreliable
+
+Azure CDN + T-Mobile CGNAT exposes the issue clearly
+
+Root Cause (Most Likely)
+T-Mobile 5G uses carrier encapsulation (GTP / CGNAT / tunnels) reducing usable MTU
+
+ICMP “fragmentation needed” messages are not reliably returned
+
+Some Microsoft/Azure CDN endpoints do not gracefully adapt
+
+TCP sessions silently blackhole instead of renegotiating MSS
+
+This is not a LAN issue and not practically supportable via ISP or cloud provider tickets.
+
+Mitigation Implemented
+WAN MTU Forced (ASUS Merlin)
+text
+Copy code
+WAN MTU: 1240
+Verification
+sh
+Copy code
+ip link show eth4
+# mtu 1240 confirmed
+Result:
+
+MSS automatically clamped by router
+
+No LAN traffic impacted
+
+Stable TCP sessions across all affected applications
+
+Post-Fix Results
+Azure Portal loads consistently
+
+Windows Update / DISM completes
+
+Synology backups complete without interruption
+
+No DF-related ICMP failures under MTU ceiling
+
+Lessons Learned
+Bandwidth ≠ stability
+
+PMTUD failure still exists in 2025
+
+Carrier + Cloud is the worst failure domain
+
+MSS clamping remains a valid, professional mitigation
+
+You don’t need provider admission when packet behavior proves the case
+
+
