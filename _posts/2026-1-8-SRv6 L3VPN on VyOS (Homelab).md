@@ -1,4 +1,4 @@
-- ## SRv6 L3VPN on VyOS (Homelab)
+- ## SRv6 L3VPN on VyOS (EVE-NG)
   date:: 2026-01-08
   tags:: [[homelab]] [[vyos]] [[srv6]]
 
@@ -6,7 +6,7 @@
   SRv6-enabled PE using VyOS.
 
 - **Why**  
-  Learn how SRv6 L3VPN works without vendor magic.
+  Discover how SRv6 L3VPN operates without vendor-specific magic.
 
 - **Setup**
   - IS-IS for underlay
@@ -25,4 +25,5 @@
   Control plane up. Data plane testing next.
 
 - **Notes**
-  SRv6 in VyOS is powerful but easy to misconfigure.
+  SRv6 in VyOS is powerful for service providers. 
+
