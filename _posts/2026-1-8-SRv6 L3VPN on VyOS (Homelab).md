@@ -28,4 +28,4 @@
   SRv6 in VyOS is powerful for service providers. 
 
 
-<img width="2088" height="498" alt="image" src="https://github.com/user-attachments/assets/6a13cb99-5888-46de-b66a-e5cde278d0ca" />
+
