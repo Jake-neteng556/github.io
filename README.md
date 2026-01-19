@@ -15,3 +15,6 @@ Work in progress! (WIP)
 NOTE: No personally identifiable information (PII), internal IP addresses, Excel-spreadsheets, or passwords are ever stored or committed to GitHub. All public-facing notes are sanitized, redacted, and minimized to include only essential technical or contextual details for brevity and clarity. Been homelabbing for years, now finally getting around to documenting my escapades in a public repo for all to see. 
 
 **MORE TO COME STAY TUNNED**
+
+Be sure to follow me on LinkedIn at www.linkedin.com/in/jacob-bryant925
+
