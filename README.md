@@ -16,5 +16,5 @@ NOTE: No personally identifiable information (PII), internal IP addresses, Excel
 
 **MORE TO COME STAY TUNNED**
 
-Be sure to follow me on LinkedIn at www.linkedin.com/in/jacob-bryant925
+Be sure to follow me on LinkedIn at www.linkedin.com/in/jacob-bryant925. Thank you! 
 
