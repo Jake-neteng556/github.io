@@ -35,7 +35,7 @@ Initiated full ZFS scrub
 
 Result::
 
-Pool restored successfully
+Main-Pool restored successfully
 
 All datasets and services recovered
 
@@ -55,5 +55,6 @@ Hardened storage and cache configuration
 
 Review the power protection strategy
 
-Continue regular ZFS replication
+Continue regular ZFS replication to backup server
+
 
