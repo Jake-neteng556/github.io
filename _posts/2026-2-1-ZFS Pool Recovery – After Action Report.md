@@ -45,7 +45,7 @@ Lessons Learned::
 
 ZFS + RAID write cache is unsafe without a battery-backed cache
 
-Replication is critical — backups worked exactly as intended
+Replication is critical, and the backups worked exactly as intended
 
 Stop early when ZFS metadata corruption is confirmed
 
@@ -56,3 +56,4 @@ Hardened storage and cache configuration
 Review the power protection strategy
 
 Continue regular ZFS replication
+
