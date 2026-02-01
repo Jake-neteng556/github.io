@@ -1,58 +1,58 @@
 ZFS Pool Recovery – After Action Report
 
-date:: 2026-02-01
-tags:: [[zfs]] [[truenas]] [[homelab]] [[recovery]]
+Date: 2026-02-01
+Tags: ZFS, TrueNAS, homelab, recovery
 
-Summary
+Summary::
 
-Primary ZFS pool became unrecoverable after an unexpected power loss. Pool metadata could not be safely imported. Recovery was completed using an existing replicated backup pool.
+A primary ZFS pool became unrecoverable following an unexpected power loss. Pool metadata could not be safely imported. Recovery was completed using an existing replicated backup pool.
 
-Impact
+Impact::
 
 Primary pool unavailable
 
-No data loss due to ZFS replication
+No data loss due to prior ZFS replication
 
-Root Cause
+Root Cause::
 
-Power loss during active writes
+Sudden power loss during active writes
 
-Hardware RAID controller write cache caused corrupted ZFS metadata
+RAID controller write cache caused ZFS metadata corruption
 
-Recovery Actions
+Recovery Actions::
 
-Abandoned failed import attempts on damaged pool
+Stopped further attempts to import the damaged pool
 
-Created fresh destination pool
+Created a new destination ZFS pool
 
-Restored data using zfs send | zfs recv from replicated backup
+Restored data using zfs send | zfs recv from replicated backups
 
-Verified integrity with zpool status
+Verified pool health with zpool status
 
 Corrected dataset mountpoints
 
-Initiated full scrub
+Initiated full ZFS scrub
 
-Result
+Result::
 
 Pool restored successfully
 
-All datasets, jails, and shares recovered
+All datasets and services recovered
 
-No checksum or read/write errors
+No read, write, or checksum errors detected
 
-Lessons Learned
+Lessons Learned::
 
-ZFS + RAID controller write cache is dangerous without battery-backed cache
+ZFS + RAID write cache is unsafe without a battery-backed cache
 
-Replication works — backups saved the day
+Replication is critical — backups worked exactly as intended
 
-Stop recovery attempts early when metadata corruption is confirmed
+Stop early when ZFS metadata corruption is confirmed
 
-Follow-ups
+Follow-Up Actions::
 
-Harden storage configuration
+Hardened storage and cache configuration
 
-Review power protection and write cache policy
+Review the power protection strategy
 
 Continue regular ZFS replication
