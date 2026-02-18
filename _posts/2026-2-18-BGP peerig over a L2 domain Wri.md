@@ -17,7 +17,7 @@ set protocols bgp neighbor 192.168.100.2 address-family ipv4-unicast
 # (Optional) Ensure BGP uses the correct interface for peering
 set protocols bgp neighbor 192.168.100.2 update-source '192.168.100.1'
 
-# Advertise networks
+# Advertise the networks
 set protocols bgp address-family ipv4-unicast network 10.0.0.0/24
 2. Cisco IOS Configuration 
 Assuming Cisco interface GigabitEthernet0/1 is connected to the L2 domain.
@@ -48,3 +48,4 @@ MTU: Ensure the L2 domain (switch/VLAN) supports the necessary MTU for BGP packe
 
 Advanced: BGP over L2VPN (VPLS/EVPN) 
 If the L2 domain is not a simple direct switch connection but a VPLS/EVPN network, the BGP peering should be established between loopback addresses (often via eBGP) to exchange L2VPN address family information. In this case, update-source must be set to the loopback interface, and ebgp-multihop may be required if they are not directly connected. 
+
