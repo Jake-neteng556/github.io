@@ -7,4 +7,5 @@ To avoid overheating equipment and unnecessary strain on the infrastructure, mos
 Once the HVAC system is functioning properly and stable cooling is restored, normal homelab operations and experimentation shall resume.
 
 
-Thanks to whomever reads this for your understating and support!
+
+Thanks to whoever reads this for your understanding and shadowy support!
