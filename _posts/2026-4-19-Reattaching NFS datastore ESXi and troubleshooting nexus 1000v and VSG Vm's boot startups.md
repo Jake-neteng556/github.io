@@ -11,7 +11,7 @@
 	- After re-mount, all previously registered VMs showed as **Invalid** because ESXi had assigned the datastore a new internal UUID.
 	- Re-registered each VM manually from its `.vmx` file.
 	- Cisco Nexus 1000V and VSG appliances then had boot issues:
-		- Nexus 1000V stalled at loader stage / boot shell
+		- Nexus 1000V stalled at loader stage/boot shell
 		- VSG booted inconsistently and required boot variable verification
 	- Final resolution was:
 		- re-register VMs
@@ -38,6 +38,7 @@
 		- lost / stale boot variables
 		- temporary NIC changes during troubleshooting
 		- legacy appliance sensitivity to VM hardware presentation
+  -   -The root cause analysis (RCA) was that the NAS hosting the NFS datastore received a new IP address via DHCP. ESXi still referenced the previous IP, causing the NFS datastore to disconnect and all VMs on that datastore to become unavailable. This outage could have been completely avoided by configuring either a DHCP reservation or a static IP address for the NAS.
 
 - ## Recovery Steps
 	- ### 1. Remove stale VM registrations
@@ -102,7 +103,7 @@
 - ## VSG Recovery
 	- VSG eventually progressed into system admin account setup and completed boot.
 	- Verified redundancy state:
-		- standalone / active
+		- standalone/active
 		- no standby supervisor present
 	- Confirmed saved boot variables with:
 		- `show boot`
@@ -115,7 +116,7 @@
 		- Nexus 1000V booted to CLI
 		- VSG booted to CLI
 		- boot variables saved
-		- supervisor / redundancy status healthy for standalone lab deployment
+		- supervisor/redundancy status healthy for standalone lab deployment
 
 - ## Commands Used
 	- ```bash
@@ -137,13 +138,14 @@
 
 - ## Lessons Learned
 	- Re-mounting an NFS datastore can leave VM registrations pointing at stale datastore UUID paths.
-	- Legacy appliances may not fail because of storage at all; they may fail because boot variables or expected virtual hardware changed.
+	- Legacy appliances may not fail because of storage at all; they may fail because boot variables or expected virtual hardware have changed.
 	- Cisco Nexus virtual appliances are very sensitive to:
 		- expected NIC count
 		- legacy boot state
 		- boot image paths
 	- Once the guest reaches the boot shell, progress is real. At that point the issue is usually guest boot logic, not ESXi storage.
 
-- ## GitHub-safe Notes
-	- All hostnames, datastore identifiers, IP addresses, and environment-specific labels have been redacted or generalized.
+   
+
+- ## GitHub-MISC-Notesd.
 	- This write-up is intended as a public troubleshooting summary, not a full environment export.
