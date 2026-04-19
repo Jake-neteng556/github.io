@@ -2,7 +2,7 @@
 	- **Date:** 2026-04-19
 	- **Status:** Resolved
 	- **Environment:** VMware ESXi host with NFS-backed datastore and legacy Cisco virtual appliances
- - Note: Back to monthly GitHub uploads due to the HVAC being fully operational and having been serviced.
+ - Please Do Note: Back to monthly GitHub uploads due to the HVAC being fully operational and having been serviced.
    The issue was basically that the reversing valve got stuck during the switchover and had to be freed up.
    Now that the HVAC system is in working order, I shall continue to monitor just in case, for all that I am thankful. 
 
